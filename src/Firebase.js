@@ -18,15 +18,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // the app represents all of our firebase connection for any feature i want to utlize from firebase
 
- export const auth = getAuth(app);
+export const auth = getAuth(app);
 //would include the user and know whois currently logged in 
 
 // for Gmail we have to provide a provider
 const provider = new GoogleAuthProvider();
 
 export const SignInWithGoogle = () => {
-    signInWithPopup(auth, provider).then((result) =>{
-        console.log(result);
+    signInWithPopup(auth, provider)
+    .then((result) =>{
+        const name = result.user.displayName;
+        const email = result.user.email;
+        const profilepic = result.user.photoURL;
+
+        localStorage.setItem("name", name)
+        localStorage.setItem("email", email)
+        localStorage.setItem("profilepic", profilepic)
+
     }).catch((error) => {
         console.log(error);
     });
